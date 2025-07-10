@@ -4,6 +4,7 @@ import Courts from "../pages/Courts/Courts/Courts.jsx";
 import Contact from "../pages/Contact/Contact.jsx";
 import About from "../pages/About/About.jsx";
 import Home from "../pages/Home/Home/Home.jsx";
+import Faq from "../pages/Faq/Faq.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -35,8 +36,8 @@ export const Router = createBrowserRouter([
                 // Component: Projects,
             },
             {
-                path: '/blogs',
-                // Component: Blogs,
+                path: '/faq',
+                Component: Faq,
             },
             {
                 path: "/projectDetails/:id",

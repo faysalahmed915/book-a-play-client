@@ -54,6 +54,15 @@ const Navbar = () => {
             >
                 Contact
             </NavLink>
+            
+            <NavLink
+                to="/faq"
+                className={({ isActive }) =>
+                    isActive ? "text-base-content font-bold" : "font-bold"
+                }
+            >
+                FAQ
+            </NavLink>
         </>
 
     );
