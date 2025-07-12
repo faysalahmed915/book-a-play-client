@@ -5,6 +5,9 @@ import Contact from "../pages/Contact/Contact.jsx";
 import About from "../pages/About/About.jsx";
 import Home from "../pages/Home/Home/Home.jsx";
 import Faq from "../pages/Faq/Faq.jsx";
+import AuthLayout from "../layouts/AuthLayout.jsx";
+import Login from "../pages/Authentication/Login.jsx";
+import Register from "../pages/Authentication/Register.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -46,6 +49,21 @@ export const Router = createBrowserRouter([
             {
                 path: "/contact",
                 Component: Contact,
+            }
+
+        ]
+    },
+    {
+        path: '/auth',
+        Component: AuthLayout,
+        children: [
+            {
+                path: 'login',
+                Component: Login,
+            },
+            {
+                path: 'register',
+                Component: Register,
             }
         ]
     }
