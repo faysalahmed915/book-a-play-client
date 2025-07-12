@@ -8,6 +8,8 @@ import Faq from "../pages/Faq/Faq.jsx";
 import AuthLayout from "../layouts/AuthLayout.jsx";
 import Login from "../pages/Authentication/Login.jsx";
 import Register from "../pages/Authentication/Register.jsx";
+import ResetPassword from "../pages/Authentication/ResetPassword.jsx";
+import DashboardLayout from "../layouts/DashboardLayout.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -64,7 +66,16 @@ export const Router = createBrowserRouter([
             {
                 path: 'register',
                 Component: Register,
+            },
+            {
+                path: 'resetPassword',
+                Component: ResetPassword,
+
             }
         ]
+    },
+    {
+        path: '/dashboard',
+        Component: DashboardLayout, 
     }
 ])

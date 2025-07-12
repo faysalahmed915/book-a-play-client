@@ -1,9 +1,23 @@
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import Logo from '../Shared/Logo/Logo';
 import ThemeToggle from '../ui/Theme/ThemeToggle';
+import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
 
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            Swal.fire("Logged out", "You have been logged out", "success");
+            navigate("/"); // optional: go to home
+        } catch (err) {
+            Swal.fire("Error", err.message || "Logout failed", "error");
+        }
+    };
 
     const links = (
         <>
@@ -54,7 +68,7 @@ const Navbar = () => {
             >
                 Contact
             </NavLink>
-            
+
             <NavLink
                 to="/faq"
                 className={({ isActive }) =>
@@ -97,10 +111,43 @@ const Navbar = () => {
                     </ul>
                 </div>
 
+
                 <div className="navbar-end gap-3">
+                    {!user ? (
+                        <>
+                            <Link to="/auth/login" className="btn btn-outline btn-sm">
+                                Login
+                            </Link>
+                            <Link to="/auth/register" className="btn btn-secondary btn-sm text-secondary-content">
+                                Register
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            {/* User Profile */}
+                            <div className="flex items-center gap-2">
+                                {user.photoURL && (
+                                    <img
+                                        src={user.photoURL}
+                                        alt="user"
+                                        className="w-8 h-8 rounded-full border-2 border-primary"
+                                    />
+                                )}
+                                <span className="hidden md:inline text-sm font-medium">
+                                    {user.displayName || user.email}
+                                </span>
+                            </div>
+
+                            <button onClick={handleLogout} className="btn btn-error btn-sm text-white">
+                                Logout
+                            </button>
+                        </>
+                    )}
+
 
                     <ThemeToggle />
                 </div>
+
             </div>
         </div>
 
