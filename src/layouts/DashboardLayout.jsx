@@ -4,6 +4,7 @@ import {
   FiUserCheck, FiUser, FiUserPlus
 } from 'react-icons/fi';
 import ThemeToggle from '../components/ui/Theme/ThemeToggle';
+import Logo from '../components/Shared/Logo/Logo';
 
 const DashboardLayout = () => {
   const Links = (
@@ -40,7 +41,8 @@ const DashboardLayout = () => {
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-72 min-h-full bg-base-100 text-base-content">
           <div className='flex items-center justify-between'>
-            <h2 className="text-xl font-bold mb-4">BookAPlay</h2>
+            {/* <h2 className="text-xl font-bold mb-4">BookAPlay</h2> */}
+          <Logo></Logo>
           <ThemeToggle></ThemeToggle>
           </div>
           {Links}

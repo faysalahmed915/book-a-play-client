@@ -2,12 +2,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
-import Swal from "sweetalert2";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
+import GoogleLogin from "./GoogleLogin";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const { login, googleLogin } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
@@ -34,15 +35,6 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleLogin();
-      Swal.fire("Success", "Logged in with Google!", "success");
-      navigate(from, { replace: true });
-    } catch (error) {
-      Swal.fire("Error", error.message, "error");
-    }
-  };
 
   return (
     <div className="max-w-md mx-auto p-8 shadow-xl bg-base-100 rounded">
@@ -93,13 +85,22 @@ const Login = () => {
       </form>
 
       <div className="divider">or</div>
-      <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">
-        <img
-          src="https://img.icons8.com/color/16/000000/google-logo.png"
-          alt="google"
-        />
-        Sign in with Google
-      </button>
+
+      {/* Social Signin */}
+      <div>
+              <GoogleLogin />
+      </div>
+
+      {/* Register Redirect */}
+      <div className="text-center mt-4">
+        <p className="text-sm">
+          Don't have an account yet?{" "}
+          <Link to="/auth/register" className="text-blue-600 font-semibold hover:underline">
+            Register
+          </Link>
+        </p>
+      </div>
+
     </div>
   );
 };

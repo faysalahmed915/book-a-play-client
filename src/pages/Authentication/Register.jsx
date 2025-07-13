@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation, Link } from "react-router";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth"; // ✅ important fix
 import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import GoogleLogin from "./GoogleLogin";
 
 const image_hosting_key = "254e30c78a0322d21cd206c94379ef7e";
 const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -17,14 +18,9 @@ const Register = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const { register: createFirebaseUser, loading } = useAuth();
+  const { createFirebaseUser, loading } = useAuth();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, watch, formState: { errors }, } = useForm();
 
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
@@ -189,10 +185,22 @@ const Register = () => {
       </form>
 
       <div className="divider">or</div>
-      <button className="btn btn-outline w-full">
-        <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="google" />
-        Sign in with Google
-      </button>
+      
+      {/* Social Signin */}
+      <div>
+              <GoogleLogin />
+      </div>
+
+      {/* Login Redirect */}
+      <div className="text-center mt-4">
+        <p className="text-sm">
+          Already have an account?{" "}
+          <Link to="/auth/login" className="text-blue-600 font-semibold hover:underline">
+            Login
+          </Link>
+        </p>
+      </div>
+
     </div>
   );
 };

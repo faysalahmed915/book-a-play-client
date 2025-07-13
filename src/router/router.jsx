@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../layouts/RootLayout.jsx";
-import Courts from "../pages/Courts/Courts/Courts.jsx";
 import Contact from "../pages/Contact/Contact.jsx";
 import About from "../pages/About/About.jsx";
 import Home from "../pages/Home/Home/Home.jsx";
@@ -10,6 +9,7 @@ import Login from "../pages/Authentication/Login.jsx";
 import Register from "../pages/Authentication/Register.jsx";
 import ResetPassword from "../pages/Authentication/ResetPassword.jsx";
 import DashboardLayout from "../layouts/DashboardLayout.jsx";
+import Courts from "../pages/Court/Courts.jsx";
 
 
 export const Router = createBrowserRouter([
