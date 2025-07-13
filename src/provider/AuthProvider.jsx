@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     // Register
-    const register = (email, password) => {
+    const createFirebaseUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     const authData = {
         user,
         loading,
-        register,
+        createFirebaseUser,
         login,
         googleLogin,
         logout,

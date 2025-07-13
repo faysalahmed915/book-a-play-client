@@ -29,7 +29,7 @@ const DashboardLayout = () => {
           <label htmlFor="dashboard-drawer" className="btn btn-outline lg:hidden">
             ☰
           </label>
-          <ThemeToggle />
+          {/* <div className='lg:hidden'><ThemeToggle /></div> */}
         </div>
 
         <Outlet />
@@ -39,7 +39,10 @@ const DashboardLayout = () => {
       <div className="drawer-side">
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-72 min-h-full bg-base-100 text-base-content">
-          <h2 className="text-xl font-bold mb-4">BookAPlay</h2>
+          <div className='flex items-center justify-between'>
+            <h2 className="text-xl font-bold mb-4">BookAPlay</h2>
+          <ThemeToggle></ThemeToggle>
+          </div>
           {Links}
           <li className="mt-auto pt-6 border-t">
             <NavLink to="/" className="gap-2"><FiLogOut />Back to Home</NavLink>
