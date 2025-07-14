@@ -1,106 +1,185 @@
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { FiCalendar, FiClock, FiDollarSign, FiX } from "react-icons/fi";
 import Swal from "sweetalert2";
-import { format } from "date-fns";
-
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 const CourtBookingModal = ({ court, onClose }) => {
-  const { register, handleSubmit, reset } = useForm();
-  const axiosSecure = useAxiosSecure();
+  
+  const { user } = useAuth();
+  const axios = useAxiosSecure();
+  
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSlots, setSelectedSlots] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+    
+  const formattedDate = selectedDate.toISOString().split("T")[0]; // yyyy-mm-dd
+  
+  // Fetch existing bookings for this court on selected date
+  const { data: bookings = [], isLoading } = useQuery({
+    queryKey: ["bookings", court._id, formattedDate],
+    queryFn: async () => {
+      const res = await axios.get(`/api/bookings?courtId=${court._id}&date=${formattedDate}`);
+      console.log("Fetched bookings:", res.data);
+      return res.data;
+    },
+    enabled: !!court?._id && !!formattedDate,
+  });
+  
 
-  const handleSlotChange = (slot) => {
-    if (selectedSlots.includes(slot)) {
-      setSelectedSlots(selectedSlots.filter((s) => s !== slot));
-    } else {
-      setSelectedSlots([...selectedSlots, slot]);
-    }
+  // Extract booked slots
+  const bookedSlots = bookings.flatMap((booking) =>
+    booking.slots.map((slot) => `${slot.start} - ${slot.end}`)
+  );
+
+  // Format all slots and filter available
+  const allSlots = court.slots.map((slot) => `${slot.start} - ${slot.end}`);
+  const availableSlots = allSlots.filter((slot) => !bookedSlots.includes(slot));
+
+  const handleSlotToggle = (slot) => {
+    setSelectedSlots((prev) =>
+      prev.includes(slot) ? prev.filter((s) => s !== slot) : [...prev, slot]
+    );
   };
 
-  useEffect(() => {
-    setPrice(selectedSlots.length * court.price);
-  }, [selectedSlots, court.price]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const onSubmit = async (data) => {
-    const booking = {
+    if (selectedSlots.length === 0) {
+      return Swal.fire("Error", "Please select at least one slot.", "error");
+    }
+
+    // Prepare data to send
+    const slotObjects = selectedSlots.map((slot) => {
+      const [start, end] = slot.split(" - ");
+      return { start, end };
+    });
+
+    const bookingData = {
       courtId: court._id,
-      courtName: court.name,
-      courtType: court.type,
-      slots: selectedSlots,
-      date: data.date,
-      price: price,
-      status: "pending", // will be updated by admin
+      courtTitle: court.title,
+      courtImage: court.image,
+      date: formattedDate,
+      slots: slotObjects,
+      price: selectedSlots.length * court.pricePerSlot,
+      userEmail: user?.email,
+      status: "pending", // initial state
+      createdAt: new Date().toISOString(),
     };
 
     try {
-      const res = await axiosSecure.post("/bookings", booking);
-      if (res.data.insertedId) {
-        Swal.fire("Booked!", "Your booking is pending admin approval.", "success");
-        reset();
-        setSelectedSlots([]);
-        onClose();
-      }
-    } catch (err) {
-      Swal.fire("Error", err.message || "Booking failed", "error");
+      await axios.post("/api/bookings", bookingData);
+
+      console.log("Booking request sent:", bookingData);
+      Swal.fire("Success", "Booking request sent for admin approval!", "success");
+      setSubmitted(true);
+    } catch (error) {
+      console.log(error);
+      Swal.fire("Error", "Something went wrong. Try again!", "error");
     }
   };
 
+  const totalPrice = selectedSlots.length * court.pricePerSlot;
+
   return (
-    <dialog id="booking_modal" className="modal modal-open">
-      <div className="modal-box max-w-lg">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <h3 className="font-bold text-lg">Book: {court.name}</h3>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-base-100 rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-lg text-red-600"
+        >
+          <FiX />
+        </button>
 
-          <div>
-            <label className="label">Court Type</label>
-            <input type="text" defaultValue={court.type} readOnly className="input input-bordered w-full" />
-          </div>
+        {/* Court Info */}
+        <div className="mb-4">
+          <img src={court.image} alt={court.title} className="w-full h-40 object-cover rounded-md mb-2" />
+          <h2 className="text-xl font-bold">{court.title}</h2>
+          <p className="text-sm text-gray-500">{court.type}</p>
+        </div>
 
-          <div>
-            <label className="label">Available Slots</label>
-            <div className="grid grid-cols-2 gap-2">
-              {court.slots.map((slot) => (
-                <label key={slot} className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    value={slot}
-                    checked={selectedSlots.includes(slot)}
-                    onChange={() => handleSlotChange(slot)}
-                    className="checkbox checkbox-sm"
-                  />
-                  {slot}
-                </label>
-              ))}
+        {!submitted ? (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Date Picker */}
+            <div>
+              <label className="label">Select Date</label>
+              <div className="flex items-center gap-2">
+                <FiCalendar />
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                    setSelectedSlots([]); // reset slots on date change
+                  }}
+                  className="input input-bordered w-full"
+                  minDate={new Date()}
+                  dateFormat="yyyy-MM-dd"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="label">Select Date</label>
-            <input
-              type="date"
-              {...register("date", { required: true })}
-              className="input input-bordered w-full"
-              min={format(new Date(), "yyyy-MM-dd")}
-            />
-          </div>
+            {/* Slot Selection */}
+            <div>
+              <label className="label">Select Slot(s)</label>
+              {isLoading ? (
+                <p>Loading slots...</p>
+              ) : availableSlots.length > 0 ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  {availableSlots.map((slot, idx) => {
+                    const isSelected = selectedSlots.includes(slot);
+                    return (
+                      <button
+                        type="button"
+                        key={idx}
+                        onClick={() => handleSlotToggle(slot)}
+                        className={`btn btn-sm ${
+                          isSelected ? "btn-secondary" : "btn-outline"
+                        }`}
+                      >
+                        <FiClock className="mr-1" /> {slot}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-red-500">No slots available on this date.</p>
+              )}
+            </div>
 
-          <div>
-            <label className="label">Total Price</label>
-            <input type="text" readOnly value={`৳ ${price}`} className="input input-bordered w-full" />
-          </div>
-
-          <div className="modal-action">
-            <button type="submit" className="btn btn-primary">
-              Confirm Booking
+            <button type="submit" className="btn btn-primary w-full">
+              Submit Booking Request
             </button>
-            <button type="button" onClick={onClose} className="btn">
-              Cancel
-            </button>
-          </div>
-        </form>
+          </form>
+        ) : (
+          <>
+            <h2 className="text-xl font-bold mb-4">Booking Summary</h2>
+            <ul className="space-y-2 text-sm">
+              <li><strong>Court:</strong> {court.title}</li>
+              <li><strong>Date:</strong> {selectedDate.toDateString()}</li>
+              <li>
+                <strong>Slots:</strong>{" "}
+                {selectedSlots.map((slot, i) => (
+                  <span key={i} className="badge badge-outline mr-1">
+                    {slot}
+                  </span>
+                ))}
+              </li>
+              <li className="flex items-center gap-2 text-accent font-semibold mt-2">
+                <FiDollarSign />
+                <span>Total: ৳ {totalPrice}</span>
+              </li>
+            </ul>
+            <div className="mt-6 flex justify-end gap-2">
+              <button className="btn btn-outline" onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </>
+        )}
       </div>
-    </dialog>
+    </div>
   );
 };
 

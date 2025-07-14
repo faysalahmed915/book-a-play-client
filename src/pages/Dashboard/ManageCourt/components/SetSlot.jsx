@@ -42,6 +42,7 @@ const handleAddSlot = () => {
   }
 
   const newSlot = { start: startTime, end: endTime };
+  // const newSlot = `${startTime} - ${endTime}`;
   setSlots([...slots, newSlot]);
 };
 

@@ -59,9 +59,10 @@ const AllUsers = () => {
 
     return (
         <div className="p-4 bg-base-100 rounded-xl shadow-xl">
-            <h2 className="text-2xl font-bold mb-4">All Users ({users.length})</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">All Users</h2>
 
-            <div className="mb-4 flex items-center gap-3">
+            <div className='flex flex-wrap-reverse lg:justify-between justify-center gap-2 mb-4'>
+                <div className="mb-4 flex items-center gap-3">
                 <FiSearch className="text-xl" />
                 <input
                     type="text"
@@ -71,12 +72,16 @@ const AllUsers = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
+            <div>
+                <p className="input input-bordered">Total Users: <span className='font-bold text-green-600'>{users.length}</span></p>
+            </div>
+            </div>
 
             {isLoading ? (
                 <div className="text-center">Loading...</div>
             ) : (
                 <div className="overflow-x-auto">
-                    <table className="table w-full rounded-2xl shadow-lg">
+                    <table className="table w-full">
                         <thead className='bg-secondary text-secondary-content'>
                             <tr>
                                 <th>#</th>

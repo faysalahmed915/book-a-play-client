@@ -1,38 +1,55 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { FiClock, FiDollarSign } from "react-icons/fi";
-import useAuth from "../../hooks/useAuth";
+import { FiClock } from "react-icons/fi";
+import { FaMoneyBillWave } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
-import AddCourtForm from "../Dashboard/ManageCourt/components/AddCourtForm";
+import useAuth from "../../hooks/useAuth";
+import CourtBookingModal from "./components/CourtBookingModal";
 
 const Courts = () => {
-  const [courts, setCourts] = useState([]);
-  const [selectedCourt, setSelectedCourt] = useState(null);
   const { user } = useAuth();
   const navigate = useNavigate();
-  const axios = useAxios();
+  const Axios = useAxios();
+  const [selectedCourt, setSelectedCourt] = useState(null);
 
-  useEffect(() => {
-    // Fetch courts data
-    const fetchCourts = async () => {
-      try {
-        const res = await axios.get("/courts");
-        setCourts(res.data);
-      } catch (err) {
-        console.error("Error fetching courts", err);
-      }
-    };
-
-    fetchCourts();
-  }, [axios]);
+  const {
+    data: courts = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["courts"],
+    queryFn: async () => {
+      const res = await Axios.get("/api/courts");
+      return res.data;
+    },
+  });
 
   const handleBookNow = (court) => {
     if (!user) {
-      navigate("/login", { state: { from: "/courts" } });
+      navigate("/auth/login", { state: { from: "/courts" } });
     } else {
       setSelectedCourt(court);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-20">
+        <span className="loading loading-spinner loading-lg text-secondary"></span>
+        <p>Loading courts...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center text-red-500 py-20">
+        Failed to load courts: {error.message}
+      </div>
+    );
+  }
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-8">
@@ -42,16 +59,30 @@ const Courts = () => {
         {courts.map((court) => (
           <div key={court._id} className="card bg-base-100 shadow-md">
             <figure>
-              <img src={court.image} alt={court.name} className="h-48 w-full object-cover" />
+              <img src={court.image} alt={court.title} className="h-48 w-full object-cover" />
             </figure>
             <div className="card-body">
-              <h3 className="text-xl font-semibold">{court.name}</h3>
+              <h3 className="text-xl font-semibold">{court.title}</h3>
               <p className="text-sm text-gray-500">{court.type}</p>
-              <p className="flex items-center gap-2 text-primary mt-2">
-                <FiClock /> Slots: {court.slots.join(", ")}
-              </p>
-              <p className="flex items-center gap-2 text-accent font-semibold">
-                <FiDollarSign /> ৳ {court.price} per session
+
+              {/* Slots */}
+              <h3 className="flex items-center gap-2.5"><FiClock className="text-green-600" />Slots for this Court :</h3>
+              <div className="flex flex-wrap gap-2 mt-2">
+
+                {court.slots.map((slot, index) => (
+                  <span
+                    key={index}
+                    className="bg-secondary opacity-80 text-secondary-content text-xs font-medium px-2 py-1 rounded"
+                  >
+                    {slot.start} - {slot.end}
+                  </span>
+                ))}
+              </div>
+
+
+              {/* Price */}
+              <p className="flex items-center gap-2 text-accent-content font-semibold">
+                <FaMoneyBillWave /> {court.pricePerSlot}/- per slot
               </p>
               <button onClick={() => handleBookNow(court)} className="btn btn-sm btn-secondary mt-4">
                 Book Now
