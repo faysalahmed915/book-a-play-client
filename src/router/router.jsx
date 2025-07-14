@@ -87,7 +87,31 @@ export const Router = createBrowserRouter([
             {
                 path: 'profile',
                 Component: Profile,
-            }
+            },
+            {
+                path: 'pendingBookings',
+                element: <h1>Pending Bookings</h1>, // Placeholder for PendingBookings component
+            },
+            {
+                path: 'announcements',
+                element: <h1>announcements</h1>, // Placeholder for PendingBookings component
+            },
+            {
+                path: 'approvedBookings',
+                element: <h1>approvedBookings</h1>, // Placeholder for PendingBookings component
+            },
+            {
+                path: 'confirmedBookings',
+                element: <h1>confirmedBookings</h1>, // Placeholder for PendingBookings component
+            },
+            {
+                path: 'payment',
+                element: <h1>payment</h1>, // Placeholder for PendingBookings component
+            },
+            {
+                path: 'paymentHistory',
+                element: <h1>payment History</h1>, // Placeholder for PendingBookings component
+            },
         ]
     }
 ])

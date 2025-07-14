@@ -36,13 +36,13 @@ const RoleLinks = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/my-profile" className="gap-2">
+                    <NavLink to="/dashboard/profile" className="gap-2">
                         <FiUser />
                         My Profile
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/pending-bookings" className="gap-2">
+                    <NavLink to="/dashboard/pendingBookings" className="gap-2">
                         <FiCalendar />
                         Pending Bookings
                     </NavLink>
@@ -68,25 +68,25 @@ const RoleLinks = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/my-profile" className="gap-2">
+                    <NavLink to="/dashboard/profile" className="gap-2">
                         <FiUser />
                         My Profile
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/pending-bookings" className="gap-2">
+                    <NavLink to="/dashboard/pendingBookings" className="gap-2">
                         <FiCalendar />
                         Pending Bookings
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/approved-bookings" className="gap-2">
+                    <NavLink to="/dashboard/approvedBookings" className="gap-2">
                         <FiCheckCircle />
                         Approved Bookings
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/confirmed-bookings" className="gap-2">
+                    <NavLink to="/dashboard/confirmedBookings" className="gap-2">
                         <FiClipboard />
                         Confirmed Bookings
                     </NavLink>
@@ -98,7 +98,7 @@ const RoleLinks = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/payment-history" className="gap-2">
+                    <NavLink to="/dashboard/paymentHistory" className="gap-2">
                         <FiCreditCard />
                         Payment History
                     </NavLink>

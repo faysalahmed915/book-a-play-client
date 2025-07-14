@@ -11,7 +11,7 @@ const Profile = () => {
   return (
     <div>
       {isAdmin && <p>Welcome Admin</p>}
-      {isMember && <p>Welcome Member</p>}
+      {isMember && <p>Welcome Member Profile</p>}
       {!isAdmin && !isMember && <UserProfile />}
     </div>
   )
