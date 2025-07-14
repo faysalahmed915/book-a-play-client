@@ -5,19 +5,22 @@ import {
 } from 'react-icons/fi';
 import ThemeToggle from '../components/ui/Theme/ThemeToggle';
 import Logo from '../components/Shared/Logo/Logo';
+import RoleLinks from '../pages/Dashboard/components/RoleLinks';
 
 const DashboardLayout = () => {
-  const Links = (
-    <>
-      <li><NavLink to="/dashboard" className="gap-2"><FiHome />Dashboard</NavLink></li>
-      <li><NavLink to="/dashboard/profile" className="gap-2"><FiUser />My Profile</NavLink></li>
-      <li><NavLink to="/dashboard/become-member" className="gap-2"><FiUserPlus />Become a Member</NavLink></li>
-      <li><NavLink to="/dashboard/activities" className="gap-2"><FiBookOpen />Member Activities</NavLink></li>
-      <li><NavLink to="/dashboard/manage-users" className="gap-2"><FiUsers />Manage Users</NavLink></li>
-      <li><NavLink to="/dashboard/manage-bookings" className="gap-2"><FiUserCheck />Manage Bookings</NavLink></li>
-      <li><NavLink to="/dashboard/settings" className="gap-2"><FiSettings />Admin Settings</NavLink></li>
-    </>
-  );
+
+
+  // const Links = (
+  //   <>
+  //     <li><NavLink to="/dashboard" className="gap-2"><FiHome />Dashboard</NavLink></li>
+  //     <li><NavLink to="/dashboard/profile" className="gap-2"><FiUser />My Profile</NavLink></li>
+  //     <li><NavLink to="/dashboard/become-member" className="gap-2"><FiUserPlus />Become a Member</NavLink></li>
+  //     <li><NavLink to="/dashboard/activities" className="gap-2"><FiBookOpen />Member Activities</NavLink></li>
+  //     <li><NavLink to="/dashboard/manage-users" className="gap-2"><FiUsers />Manage Users</NavLink></li>
+  //     <li><NavLink to="/dashboard/manage-bookings" className="gap-2"><FiUserCheck />Manage Bookings</NavLink></li>
+  //     <li><NavLink to="/dashboard/settings" className="gap-2"><FiSettings />Admin Settings</NavLink></li>
+  //   </>
+  // );
 
   return (
     <div className="drawer lg:drawer-open">
@@ -45,7 +48,7 @@ const DashboardLayout = () => {
           <Logo></Logo>
           <ThemeToggle></ThemeToggle>
           </div>
-          {Links}
+          <RoleLinks />
           <li className="mt-auto pt-6 border-t">
             <NavLink to="/" className="gap-2"><FiLogOut />Back to Home</NavLink>
           </li>

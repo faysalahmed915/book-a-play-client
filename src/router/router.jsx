@@ -10,6 +10,8 @@ import Register from "../pages/Authentication/Register.jsx";
 import ResetPassword from "../pages/Authentication/ResetPassword.jsx";
 import DashboardLayout from "../layouts/DashboardLayout.jsx";
 import Courts from "../pages/Court/Courts.jsx";
+import Dashboard from "../pages/Dashboard/HomeDashboard/Dashboard.jsx";
+import Profile from "../pages/Dashboard/Profile/Profile.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -77,5 +79,15 @@ export const Router = createBrowserRouter([
     {
         path: '/dashboard',
         Component: DashboardLayout, 
+        children: [
+            {
+                index: true,
+                Component: Dashboard,
+            },
+            {
+                path: 'profile',
+                Component: Profile,
+            }
+        ]
     }
 ])
