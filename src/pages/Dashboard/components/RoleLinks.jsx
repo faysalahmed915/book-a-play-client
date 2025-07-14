@@ -124,49 +124,49 @@ const RoleLinks = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/admin-profile" className="gap-2">
+                    <NavLink to="/dashboard/profile" className="gap-2">
                         <FiUser />
                         Admin Profile
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/manage-bookings-approval" className="gap-2">
+                    <NavLink to="/dashboard/manageBookingsApproval" className="gap-2">
                         <FiCheckCircle />
                         Manage Bookings Approval
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/manage-members" className="gap-2">
+                    <NavLink to="/dashboard/manageMembers" className="gap-2">
                         <FiUsers />
                         Manage Members
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/all-users" className="gap-2">
+                    <NavLink to="/dashboard/allUsers" className="gap-2">
                         <FiUser />
                         All Users
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/manage-courts" className="gap-2">
+                    <NavLink to="/dashboard/manageCourts" className="gap-2">
                         <FiSettings />
                         Manage Courts
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/manage-bookings" className="gap-2">
+                    <NavLink to="/dashboard/manageBookings" className="gap-2">
                         <FiClipboard />
                         Manage Bookings
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/manage-coupons" className="gap-2">
+                    <NavLink to="/dashboard/manageCoupons" className="gap-2">
                         <FiPlusCircle />
                         Manage Coupons
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/make-announcement" className="gap-2">
+                    <NavLink to="/dashboard/makeAnnouncement" className="gap-2">
                         <FiMessageCircle />
                         Make Announcement
                     </NavLink>

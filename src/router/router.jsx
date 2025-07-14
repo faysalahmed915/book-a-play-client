@@ -12,6 +12,7 @@ import DashboardLayout from "../layouts/DashboardLayout.jsx";
 import Courts from "../pages/Court/Courts.jsx";
 import Dashboard from "../pages/Dashboard/HomeDashboard/Dashboard.jsx";
 import Profile from "../pages/Dashboard/Profile/Profile.jsx";
+import ManageCourts from "../pages/Dashboard/ManageCourt/ManageCourts.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -78,7 +79,7 @@ export const Router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        Component: DashboardLayout, 
+        Component: DashboardLayout,
         children: [
             {
                 index: true,
@@ -90,28 +91,57 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'pendingBookings',
-                element: <h1>Pending Bookings</h1>, // Placeholder for PendingBookings component
+                element: <h1>Pending Bookings</h1>,
             },
             {
                 path: 'announcements',
-                element: <h1>announcements</h1>, // Placeholder for PendingBookings component
+                element: <h1>announcements</h1>,
             },
             {
                 path: 'approvedBookings',
-                element: <h1>approvedBookings</h1>, // Placeholder for PendingBookings component
+                element: <h1>approvedBookings</h1>,
             },
             {
                 path: 'confirmedBookings',
-                element: <h1>confirmedBookings</h1>, // Placeholder for PendingBookings component
+                element: <h1>confirmedBookings</h1>,
             },
             {
                 path: 'payment',
-                element: <h1>payment</h1>, // Placeholder for PendingBookings component
+                element: <h1>payment</h1>, 
             },
             {
                 path: 'paymentHistory',
-                element: <h1>payment History</h1>, // Placeholder for PendingBookings component
+                element: <h1>payment History</h1>,
             },
+            {
+                path: 'manageBookingsApproval',
+                element: <h1>manage Bookings Approval</h1>,
+            },
+            {
+                path: 'manageMembers',
+                element: <h1>manage Members</h1>,
+            },
+            {
+                path: 'allUsers',
+                element: <h1>all Users</h1>,
+            },
+            {
+                path: 'manageCourts',
+                element: <ManageCourts />,
+            },
+            {
+                path: 'manageBookings',
+                element: <h1>manage Bookings</h1>,
+            },
+            {
+                path: 'manageCoupons',
+                element: <h1>manage Coupons</h1>,
+            },
+            {
+                path: 'makeAnnouncement',
+                element: <h1>make Announcement</h1>,
+            },
+            
         ]
     }
 ])
