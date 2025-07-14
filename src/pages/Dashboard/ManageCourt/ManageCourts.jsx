@@ -50,18 +50,18 @@ const ManageCourts = () => {
   if (isError) return <p>Failed to load courts.</p>;
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Manage Courts</h2>
-        <Link to="/dashboard/add-court" className="btn btn-primary flex items-center gap-2">
+        <h2 className="text-3xl font-bold">Manage Courts</h2>
+        <Link to="/dashboard/addCourt" className="btn btn-secondary text-secondary-content flex items-center gap-2">
           <FiPlus /> Add New Court
         </Link>
       </div>
 
-      <div className="overflow-x-auto bg-white shadow rounded-xl">
+      <div className="overflow-x-auto bg-base-100 shadow rounded-xl">
         <table className="table w-full">
           <thead>
-            <tr className="bg-gray-100">
+            <tr className="bg-accent text-accent-content">
               <th>Image</th>
               <th>Title</th>
               <th>Type</th>

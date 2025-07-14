@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import ThemeToggle from "../../ui/Theme/ThemeToggle";
 
 const UserDropdown = () => {
   const { user, logout } = useAuth();
@@ -24,7 +25,7 @@ const UserDropdown = () => {
 
       <ul
         tabIndex={0}
-        className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-200 rounded-box space-y-2"
+        className="mt-3 z-[1] p-2 shadow menu dropdown-content bg-base-200 rounded-box space-y-2"
       >
         <li className="text-green-600 text-center pointer-events-none">
           {user.displayName || user.email}
@@ -34,6 +35,9 @@ const UserDropdown = () => {
         </li>
         <li>
           <button onClick={handleLogout}>Logout</button>
+        </li>
+        <li>
+            <ThemeToggle />
         </li>
       </ul>
     </div>

@@ -13,6 +13,8 @@ import Courts from "../pages/Court/Courts.jsx";
 import Dashboard from "../pages/Dashboard/HomeDashboard/Dashboard.jsx";
 import Profile from "../pages/Dashboard/Profile/Profile.jsx";
 import ManageCourts from "../pages/Dashboard/ManageCourt/ManageCourts.jsx";
+import AddCourtForm from "../pages/Dashboard/ManageCourt/components/AddCourtForm.jsx";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -123,7 +125,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'allUsers',
-                element: <h1>all Users</h1>,
+                element: <AllUsers />,
             },
             {
                 path: 'manageCourts',
@@ -140,6 +142,10 @@ export const Router = createBrowserRouter([
             {
                 path: 'makeAnnouncement',
                 element: <h1>make Announcement</h1>,
+            },
+            {
+                path: 'addCourt',
+                element: <AddCourtForm />,
             },
             
         ]

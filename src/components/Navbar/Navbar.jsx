@@ -126,7 +126,7 @@ const Navbar = () => {
                     ) : <UserDropdown />}
 
 
-                    <ThemeToggle />
+                    { !user && <ThemeToggle />}
                 </div>
 
             </div>

@@ -20,8 +20,9 @@ const AddCourtForm = () => {
   } = useForm();
 
   const { mutateAsync: saveCourt, isPending } = useMutation({
-    mutationFn: async (courtData) => {
-      const res = await axiosSecure.post("/api/courts", courtData);
+    mutationFn: async (formattedData) => {
+       console.log("Sending data to backend:", formattedData);
+      const res = await axiosSecure.post("/api/courts", formattedData);
       return res.data;
     },
     onSuccess: () => {
@@ -48,7 +49,7 @@ const AddCourtForm = () => {
       createdAt: new Date().toISOString(),
     };
 console.log("Formatted Court Data:", formattedData);
-    // await saveCourt(formattedData);
+    await saveCourt(formattedData);
   };
 
   return (

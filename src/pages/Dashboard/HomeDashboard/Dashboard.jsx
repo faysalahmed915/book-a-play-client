@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      {isAdmin && <AddCourtForm />}
+      {isAdmin && <p>Admin Dashboard</p>}
       {isMember && <p>Welcome Member</p>}
       {!isAdmin && !isMember && <p>Welcome User Interface</p>}
     </div>

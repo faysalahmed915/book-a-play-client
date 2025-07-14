@@ -23,7 +23,7 @@ const DashboardLayout = () => {
   // );
 
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open max-w-7xl mx-auto">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
       {/* Page content */}
