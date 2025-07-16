@@ -1,5 +1,7 @@
 import LoadingSpinner from "../../../components/ui/Loading/LoadingSpinner"
 import useUserRole from "../../../hooks/useUserRole"
+import AdminProfile from "../HomeDashboard/components/AdminProfile"
+import MemberProfile from "../HomeDashboard/components/MemberProfile"
 import UserProfile from "./components/UserProfile"
 
 
@@ -10,8 +12,8 @@ const Profile = () => {
 
   return (
     <div>
-      {isAdmin && <p>Welcome Admin</p>}
-      {isMember && <p>Welcome Member Profile</p>}
+      {isAdmin && <AdminProfile />}
+      {isMember && <MemberProfile />}
       {!isAdmin && !isMember && <UserProfile />}
     </div>
   )
