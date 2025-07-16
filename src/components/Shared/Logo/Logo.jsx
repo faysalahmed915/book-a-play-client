@@ -5,7 +5,7 @@ const Logo = () => {
     return (
         <div>
             <Link to='/'>
-                Book a Play
+                <img className='w-32' src="/src/assets/logo-5.png" alt="" />
             </Link>
         </div>
     );

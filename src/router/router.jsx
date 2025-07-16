@@ -15,6 +15,9 @@ import Profile from "../pages/Dashboard/Profile/Profile.jsx";
 import ManageCourts from "../pages/Dashboard/ManageCourt/ManageCourts.jsx";
 import AddCourtForm from "../pages/Dashboard/ManageCourt/components/AddCourtForm.jsx";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers.jsx";
+import { Pen } from "lucide-react";
+import PendingBookings from "../pages/Dashboard/PendingBooking/PendingBooking.jsx";
+import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -93,7 +96,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'pendingBookings',
-                element: <h1>Pending Bookings</h1>,
+                element: <PendingBookings />,
             },
             {
                 path: 'announcements',
@@ -116,8 +119,8 @@ export const Router = createBrowserRouter([
                 element: <h1>payment History</h1>,
             },
             {
-                path: 'manageBookingsApproval',
-                element: <h1>manage Bookings Approval</h1>,
+                path: 'manageBookings',
+                element: <ManageBookings />,
             },
             {
                 path: 'manageMembers',

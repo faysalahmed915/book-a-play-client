@@ -130,7 +130,7 @@ const RoleLinks = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard/manageBookingsApproval" className="gap-2">
+                    <NavLink to="/dashboard/manageBookings" className="gap-2">
                         <FiCheckCircle />
                         Manage Bookings Approval
                     </NavLink>
