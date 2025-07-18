@@ -1,7 +1,7 @@
 import LoadingSpinner from "../../../components/ui/Loading/LoadingSpinner"
 import useUserRole from "../../../hooks/useUserRole"
-import AdminProfile from "../HomeDashboard/components/AdminProfile"
-import MemberProfile from "../HomeDashboard/components/MemberProfile"
+import AdminProfile from "./components/AdminProfile"
+import MemberProfile from "./components/MemberProfile"
 import UserProfile from "./components/UserProfile"
 
 

@@ -7,16 +7,16 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 const CourtBookingModal = ({ court, onClose }) => {
-  
+
   const { user } = useAuth();
   const axios = useAxiosSecure();
-  
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [submitted, setSubmitted] = useState(false);
-    
+
   const formattedDate = selectedDate.toISOString().split("T")[0]; // yyyy-mm-dd
-  
+
   // Fetch existing bookings for this court on selected date
   const { data: bookings = [], isLoading } = useQuery({
     queryKey: ["bookings", court._id, formattedDate],
@@ -27,7 +27,7 @@ const CourtBookingModal = ({ court, onClose }) => {
     },
     enabled: !!court?._id && !!formattedDate,
   });
-  
+
 
   // Extract booked slots
   const bookedSlots = bookings.flatMap((booking) =>
@@ -61,6 +61,9 @@ const CourtBookingModal = ({ court, onClose }) => {
       courtId: court._id,
       courtTitle: court.title,
       courtImage: court.image,
+      courtType: court.type,
+      courtLocation: court.location || "Dhaka",
+      courtDescription: court.description,
       date: formattedDate,
       slots: slotObjects,
       price: selectedSlots.length * court.pricePerSlot,
@@ -75,6 +78,20 @@ const CourtBookingModal = ({ court, onClose }) => {
       console.log("Booking request sent:", bookingData);
       Swal.fire("Success", "Booking request sent for admin approval!", "success");
       setSubmitted(true);
+
+      // ✅ Check updated role
+      const roleRes = await axios.get(`/api/users/role?email=${user?.email}`);
+      const newRole = roleRes?.data?.role;
+
+      if (newRole === "member") {
+        // 🎉 Show congratulation and refresh dashboard
+        Swal.fire("🎉 Congratulations!", "You are now a club member!", "success")
+          .then(() => {
+            // 🧭 Reload or redirect to load member dashboard
+            window.location.reload(); // OR use navigate('/dashboard/member')
+          });
+      }
+
     } catch (error) {
       console.log(error);
       Swal.fire("Error", "Something went wrong. Try again!", "error");
@@ -134,9 +151,8 @@ const CourtBookingModal = ({ court, onClose }) => {
                         type="button"
                         key={idx}
                         onClick={() => handleSlotToggle(slot)}
-                        className={`btn btn-sm ${
-                          isSelected ? "btn-secondary" : "btn-outline"
-                        }`}
+                        className={`btn btn-sm ${isSelected ? "btn-secondary" : "btn-outline"
+                          }`}
                       >
                         <FiClock className="mr-1" /> {slot}
                       </button>

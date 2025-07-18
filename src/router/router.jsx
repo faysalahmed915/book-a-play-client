@@ -18,6 +18,7 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers.jsx";
 import { Pen } from "lucide-react";
 import PendingBookings from "../pages/Dashboard/PendingBooking/PendingBooking.jsx";
 import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings.jsx";
+import ApprovedBooking from "../pages/Dashboard/ApprovedBooking/ApprovedBooking.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -88,12 +89,12 @@ export const Router = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: Dashboard,
-            },
-            {
-                path: 'profile',
                 Component: Profile,
             },
+            // {
+            //     path: 'profile',
+            //     Component: Profile,
+            // },
             {
                 path: 'pendingBookings',
                 element: <PendingBookings />,
@@ -104,7 +105,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'approvedBookings',
-                element: <h1>approvedBookings</h1>,
+                element: <ApprovedBooking />,
             },
             {
                 path: 'confirmedBookings',

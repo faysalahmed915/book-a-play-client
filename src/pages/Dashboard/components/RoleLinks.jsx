@@ -35,12 +35,12 @@ const RoleLinks = () => {
                         Dashboard
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to="/dashboard/profile" className="gap-2">
                         <FiUser />
                         My Profile
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink to="/dashboard/pendingBookings" className="gap-2">
                         <FiCalendar />
@@ -67,12 +67,12 @@ const RoleLinks = () => {
                         Dashboard
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to="/dashboard/profile" className="gap-2">
                         <FiUser />
                         My Profile
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink to="/dashboard/pendingBookings" className="gap-2">
                         <FiCalendar />
@@ -123,12 +123,12 @@ const RoleLinks = () => {
                         Dashboard
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to="/dashboard/profile" className="gap-2">
                         <FiUser />
                         Admin Profile
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink to="/dashboard/manageBookings" className="gap-2">
                         <FiCheckCircle />
