@@ -19,6 +19,8 @@ import { Pen } from "lucide-react";
 import PendingBookings from "../pages/Dashboard/PendingBooking/PendingBooking.jsx";
 import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings.jsx";
 import ApprovedBooking from "../pages/Dashboard/ApprovedBooking/ApprovedBooking.jsx";
+import StripePaymentWrapper from "../components/Shared/PaymentPages/Stripe/StripePaymentWrapper .jsx";
+import ConfirmedCourts from "../pages/Dashboard/ConfirmedBooking/ConfirmedCourts.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -109,7 +111,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'confirmedBookings',
-                element: <h1>confirmedBookings</h1>,
+                element: <ConfirmedCourts />,
             },
             {
                 path: 'payment',
@@ -150,6 +152,10 @@ export const Router = createBrowserRouter([
             {
                 path: 'addCourt',
                 element: <AddCourtForm />,
+            },
+            {
+                path: 'stripePay/:id',
+                element: <StripePaymentWrapper />,
             },
             
         ]
