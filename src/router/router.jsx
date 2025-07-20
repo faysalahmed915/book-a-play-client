@@ -21,6 +21,7 @@ import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings.jsx
 import ApprovedBooking from "../pages/Dashboard/ApprovedBooking/ApprovedBooking.jsx";
 import StripePaymentWrapper from "../components/Shared/PaymentPages/Stripe/StripePaymentWrapper .jsx";
 import ConfirmedCourts from "../pages/Dashboard/ConfirmedBooking/ConfirmedCourts.jsx";
+import ManageMembers from "../pages/Dashboard/ManageMembers/ManageMembers.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -127,7 +128,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'manageMembers',
-                element: <h1>manage Members</h1>,
+                element: <ManageMembers />,
             },
             {
                 path: 'allUsers',
