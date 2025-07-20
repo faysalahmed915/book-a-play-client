@@ -22,6 +22,9 @@ import ApprovedBooking from "../pages/Dashboard/ApprovedBooking/ApprovedBooking.
 import StripePaymentWrapper from "../components/Shared/PaymentPages/Stripe/StripePaymentWrapper .jsx";
 import ConfirmedCourts from "../pages/Dashboard/ConfirmedBooking/ConfirmedCourts.jsx";
 import ManageMembers from "../pages/Dashboard/ManageMembers/ManageMembers.jsx";
+import PaymentHistory from "../pages/Dashboard/ManageMembers/PaymentHistory.jsx";
+import MakeAnnouncement from "../pages/Dashboard/MakeAnnouncement/MakeAnnouncement.jsx";
+import Announcements from "../pages/Dashboard/Announcements/Announcements.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -104,7 +107,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'announcements',
-                element: <h1>announcements</h1>,
+                element: <Announcements />,
             },
             {
                 path: 'approvedBookings',
@@ -120,7 +123,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'paymentHistory',
-                element: <h1>payment History</h1>,
+                element: <PaymentHistory />,
             },
             {
                 path: 'manageBookings',
@@ -148,7 +151,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'makeAnnouncement',
-                element: <h1>make Announcement</h1>,
+                element: <MakeAnnouncement />,
             },
             {
                 path: 'addCourt',
