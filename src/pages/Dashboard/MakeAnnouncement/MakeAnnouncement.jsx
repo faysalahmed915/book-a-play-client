@@ -36,7 +36,7 @@ const MakeAnnouncement = () => {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="p-6 max-w-5xl mx-auto">
       <Helmet>
         <title>Make Announcement | Book A Play</title>
       </Helmet>
@@ -63,7 +63,7 @@ const MakeAnnouncement = () => {
           <label className="label font-semibold">Description</label>
           <textarea
             name="description"
-            className="textarea textarea-bordered w-full h-32"
+            className="textarea textarea-bordered w-full min-h-32"
             value={formData.description}
             onChange={handleChange}
             required
@@ -78,7 +78,7 @@ const MakeAnnouncement = () => {
           {isPending ? "Posting..." : "Post Announcement"}
         </button>
 
-        {isSuccess && (
+        {isSuccess && ( 
           <p className="text-green-500 text-center">✅ Announcement posted!</p>
         )}
         {isError && (

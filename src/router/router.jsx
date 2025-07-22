@@ -25,6 +25,7 @@ import ManageMembers from "../pages/Dashboard/ManageMembers/ManageMembers.jsx";
 import PaymentHistory from "../pages/Dashboard/ManageMembers/PaymentHistory.jsx";
 import MakeAnnouncement from "../pages/Dashboard/MakeAnnouncement/MakeAnnouncement.jsx";
 import Announcements from "../pages/Dashboard/Announcements/Announcements.jsx";
+import ManageCoupons from "../pages/Dashboard/ManageCoupons/ManageCoupons.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -147,7 +148,7 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'manageCoupons',
-                element: <h1>manage Coupons</h1>,
+                element: <ManageCoupons />,
             },
             {
                 path: 'makeAnnouncement',
