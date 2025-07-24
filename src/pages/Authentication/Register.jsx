@@ -5,15 +5,15 @@ import { useNavigate, useLocation, Link } from "react-router";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth"; // ✅ important fix
 import useAuth from "../../hooks/useAuth";
-import useAxios from "../../hooks/useAxios";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import GoogleLogin from "./GoogleLogin";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const image_hosting_key = "254e30c78a0322d21cd206c94379ef7e";
 const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";

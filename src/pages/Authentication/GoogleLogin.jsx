@@ -2,15 +2,15 @@ import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
-import useAxios from '../../hooks/useAxios';
 import { useMutation } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const GoogleLogin = () => {
 
     const { googleLogin } = useAuth();
     const navigate = useNavigate();
     const from = location.state?.from || '/';
-    const axiosInstance = useAxios();
+    const axiosInstance = useAxiosSecure();
 
     const { mutateAsync: saveGoogleUser, isPending } = useMutation({
         mutationFn: async (userInfo) => {
