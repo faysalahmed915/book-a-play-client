@@ -33,11 +33,11 @@ const useAxiosSecure = () => {
                 const status = error.response?.status;
 
                 if (status === 403) {
-                    navigate("/forbidden");
+                    // navigate("/forbidden");
                 } else if (status === 401) {
                     try {
                         await logout();           // Log out the user from Firebase
-                        navigate("/login");       // Redirect to login page
+                        navigate("/auth/login");       // Redirect to login page
                     } catch (err) {
                         console.error("Logout failed", err);
                     }
