@@ -15,17 +15,19 @@ import Profile from "../pages/Dashboard/Profile/Profile.jsx";
 import ManageCourts from "../pages/Dashboard/ManageCourt/ManageCourts.jsx";
 import AddCourtForm from "../pages/Dashboard/ManageCourt/components/AddCourtForm.jsx";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers.jsx";
-import { Pen } from "lucide-react";
 import PendingBookings from "../pages/Dashboard/PendingBooking/PendingBooking.jsx";
 import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings.jsx";
 import ApprovedBooking from "../pages/Dashboard/ApprovedBooking/ApprovedBooking.jsx";
 import StripePaymentWrapper from "../components/Shared/PaymentPages/Stripe/StripePaymentWrapper .jsx";
 import ConfirmedCourts from "../pages/Dashboard/ConfirmedBooking/ConfirmedCourts.jsx";
 import ManageMembers from "../pages/Dashboard/ManageMembers/ManageMembers.jsx";
-import PaymentHistory from "../pages/Dashboard/ManageMembers/PaymentHistory.jsx";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory.jsx";
 import MakeAnnouncement from "../pages/Dashboard/MakeAnnouncement/MakeAnnouncement.jsx";
 import Announcements from "../pages/Dashboard/Announcements/Announcements.jsx";
 import ManageCoupons from "../pages/Dashboard/ManageCoupons/ManageCoupons.jsx";
+import PrivateRoute from "../routes/PrivateRoute.jsx";
+import MemberRoute from "../routes/MemberRoute.jsx";
+import AdminRoute from "../routes/AdminRoute.jsx";
 
 
 export const Router = createBrowserRouter([
@@ -92,7 +94,7 @@ export const Router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        Component: DashboardLayout,
+        element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
         children: [
             {
                 index: true,
@@ -112,35 +114,35 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'approvedBookings',
-                element: <ApprovedBooking />,
+                element: <MemberRoute><ApprovedBooking /></MemberRoute>,
             },
             {
                 path: 'confirmedBookings',
-                element: <ConfirmedCourts />,
+                element: <MemberRoute><ConfirmedCourts /></MemberRoute>,
             },
             {
                 path: 'payment',
-                element: <h1>payment</h1>, 
+                element: <h1>payment</h1>,
             },
             {
                 path: 'paymentHistory',
-                element: <PaymentHistory />,
+                element: <MemberRoute><PaymentHistory /></MemberRoute>,
             },
             {
                 path: 'manageBookings',
-                element: <ManageBookings />,
+                element: <AdminRoute><ManageBookings /></AdminRoute>,
             },
             {
                 path: 'manageMembers',
-                element: <ManageMembers />,
+                element: <AdminRoute><ManageMembers /></AdminRoute>,
             },
             {
                 path: 'allUsers',
-                element: <AllUsers />,
+                element: <AdminRoute><AllUsers /></AdminRoute>,
             },
             {
                 path: 'manageCourts',
-                element: <ManageCourts />,
+                element: <AdminRoute><ManageCourts /></AdminRoute>,
             },
             {
                 path: 'manageBookings',
@@ -148,21 +150,21 @@ export const Router = createBrowserRouter([
             },
             {
                 path: 'manageCoupons',
-                element: <ManageCoupons />,
+                element: <AdminRoute><ManageCoupons /></AdminRoute>,
             },
             {
                 path: 'makeAnnouncement',
-                element: <MakeAnnouncement />,
+                element: <AdminRoute><MakeAnnouncement /></AdminRoute>,
             },
             {
                 path: 'addCourt',
-                element: <AddCourtForm />,
+                element: <AdminRoute><AddCourtForm /></AdminRoute>,
             },
             {
                 path: 'stripePay/:id',
                 element: <StripePaymentWrapper />,
             },
-            
+
         ]
     }
 ])

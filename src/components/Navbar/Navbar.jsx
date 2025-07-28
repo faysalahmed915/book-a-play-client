@@ -101,7 +101,7 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    <div className='w-24 hidden lg:flex items-center'>
+                    <div className='hidden lg:flex items-center'>
                         <Logo></Logo>
                     </div>
                 </div>
