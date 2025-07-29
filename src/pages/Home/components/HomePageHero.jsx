@@ -35,21 +35,21 @@ export default function HomePageHero() {
       </Fade>
 
       <Fade delay={400} triggerOnce>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           <img
-            src="https://i.ibb.co/nrMfs7y/sports-club.jpg"
-            alt="Club"
-            className="rounded-2xl shadow-lg object-cover w-full h-64"
-          />
-          <img
-            src="https://i.ibb.co/1LsDLqq/tennis-court.jpg"
+            src="https://i.ibb.co/qLCGL9rv/Whats-App-Image-2025-07-29-at-8-15-47-PM.jpg"
             alt="Courts"
-            className="rounded-2xl shadow-lg object-cover w-full h-64"
+            className="rounded-2xl shadow-lg object-cover w-full"
           />
           <img
-            src="https://i.ibb.co/QrFQFvc/activities.jpg"
+            src="https://i.ibb.co/svnK5Y4d/Whats-App-Image-2025-07-29-at-8-15-46-PM.jpg"
+            alt="Club"
+            className="rounded-2xl shadow-lg object-cover w-full"
+          />
+          <img
+            src="https://i.ibb.co/xq8bpTj0/Whats-App-Image-2025-07-29-at-8-15-46-PM-1.jpg"
             alt="Activities"
-            className="rounded-2xl shadow-lg object-cover w-full h-64"
+            className="rounded-2xl shadow-lg object-cover w-full"
           />
         </div>
       </Fade>

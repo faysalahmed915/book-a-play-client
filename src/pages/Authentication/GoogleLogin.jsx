@@ -1,6 +1,6 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import { useMutation } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
@@ -8,8 +8,10 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 const GoogleLogin = () => {
 
     const { googleLogin } = useAuth();
+    const location = useLocation();
     const navigate = useNavigate();
-    const from = location.state?.from || '/';
+    const from = location.state?.from || '/dashboard';
+    // console.log(from);
     const axiosInstance = useAxiosSecure();
 
     const { mutateAsync: saveGoogleUser, isPending } = useMutation({

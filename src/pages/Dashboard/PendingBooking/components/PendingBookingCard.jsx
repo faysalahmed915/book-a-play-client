@@ -1,8 +1,8 @@
 import React from 'react';
-import { FiCalendar, FiClock, FiDollarSign, FiTrash } from 'react-icons/fi';
+import { FiCalendar, FiClock, FiDollarSign, FiTag, FiTrash } from 'react-icons/fi';
 
 const PendingBookingCard = ({ booking, handleCancel, cancelBookingMutation }) => {
-    // console.log(booking)
+    console.log(booking)
     return (
         <div key={booking._id} className="border rounded-lg py-4 px-4 md:px-6 lg:px-8 bg-base-300 shadow">
             <div className='flex gap-4 flex-wrap-reverse justify-center sm:justify-between items-center'>
@@ -31,14 +31,24 @@ const PendingBookingCard = ({ booking, handleCancel, cancelBookingMutation }) =>
                             <FiDollarSign />
                             <span>Total: {booking.price}/=</span>
                         </div>
+
+                        {/* ✅ Show discounted price if applicable */}
+                        {booking.discountedPrice && booking.discountedPrice < booking.price && (
+                            <div className="flex items-center gap-2 text-success font-semibold">
+                                <FiTag />
+                                <span>Discounted: {booking.discountedPrice}/=</span>
+                            </div>
+                        )}
+
+
                     </div>
                 </div>
                 <div>
                     <img
-                            src={booking.courtImage}
-                            alt={booking.courtTitle}
-                            className="w-40 md:w-48 lg:w-64 object-cover rounded mt-2 md:mt-0"
-                        />
+                        src={booking.courtImage}
+                        alt={booking.courtTitle}
+                        className="w-40 md:w-48 lg:w-64 object-cover rounded mt-2 md:mt-0"
+                    />
                 </div>
             </div>
 

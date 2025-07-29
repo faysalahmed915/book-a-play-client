@@ -16,6 +16,7 @@ const ManageCoupons = () => {
         queryKey: ["coupons"],
         queryFn: async () => {
             const res = await axiosSecure.get("/api/coupons");
+            console.log("Fetched coupons:", res.data); // Debugging log
             return res.data;
         },
     });

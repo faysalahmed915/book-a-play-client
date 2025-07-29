@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import { FiClock, FiCalendar, FiDollarSign, FiCheck, FiX } from 'react-icons/fi';
+import { FiClock, FiCalendar, FiDollarSign, FiCheck, FiX, FiTag } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import LoadingSpinner from '../../../components/ui/Loading/LoadingSpinner';
 import NoData from '../../../components/Shared/NoData/NoData';
@@ -77,6 +77,15 @@ const ManageBookings = () => {
                                             <FiDollarSign />
                                             <span>Total: {booking.price}/=</span>
                                         </div>
+
+                                        {/* ✅ Show discounted price if applicable */}
+                                        {booking.discountedPrice && booking.discountedPrice < booking.price && (
+                                            <div className="flex items-center gap-2 text-success font-semibold">
+                                                <FiTag />
+                                                <span>Discounted: {booking.discountedPrice}/=</span>
+                                            </div>
+                                        )}
+
                                     </div>
                                 </div>
                                 <div>

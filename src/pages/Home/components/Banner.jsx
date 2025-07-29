@@ -1,7 +1,7 @@
 import React from "react";
-import img1 from "../../../assets/banner-urban.png";
-import img2 from "../../../assets/banner-offer.png";
-import img3 from "../../../assets/banner-commingSoon.png";
+import img1 from "../../../assets/banner-1.jpeg";
+import img3 from "../../../assets/banner-2.jpeg";
+import img2 from "../../../assets/banner-3.jpeg";
 
 const images = [
   { src: img1, alt: "Urban Sports Court", caption: "Play Urban, Play Strong" },
@@ -32,7 +32,7 @@ export default function Banner() {
           key={i}
           src={src}
           alt={alt}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 w-full object-cover transition-opacity duration-1000 ease-in-out ${
             i === current ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           loading="lazy"

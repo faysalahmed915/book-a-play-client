@@ -11,7 +11,8 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/dashboard";
+  const from = location.state?.from || "/dashboard";
+  // console.log("Redirecting to:", location.state.from, from);
 
   const {
     register,
@@ -88,7 +89,7 @@ const Login = () => {
 
       {/* Social Signin */}
       <div>
-              <GoogleLogin />
+        <GoogleLogin />
       </div>
 
       {/* Register Redirect */}
