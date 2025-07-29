@@ -1,5 +1,3 @@
-// src/routes/MemberRoute.jsx
-import { Navigate, useLocation } from "react-router";
 import LoadingSpinner from "../components/ui/Loading/LoadingSpinner";
 import useAuth from "../hooks/useAuth";
 import useUserRole from "../hooks/useUserRole";
@@ -7,12 +5,17 @@ import useUserRole from "../hooks/useUserRole";
 const MemberRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const { isMember, isLoading } = useUserRole();
-  const location = useLocation();
 
   if (loading || isLoading) return <LoadingSpinner />;
 
   if (!user || !isMember) {
-    return <Navigate to="/unauthorized" state={{ from: location }} replace />;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center">
+        <h2 className="text-3xl font-bold mb-4">Access Denied</h2>
+        <p className="mb-6">You do not have permission to view this page.</p>
+        {/* Optionally add a "Go Back" button or contact info here */}
+      </div>
+    );
   }
 
   return children;

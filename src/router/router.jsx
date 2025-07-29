@@ -122,10 +122,10 @@ export const Router = createBrowserRouter([
                 path: 'confirmedBookings',
                 element: <MemberRoute><ConfirmedCourts /></MemberRoute>,
             },
-            {
-                path: 'payment',
-                element: <h1>payment</h1>,
-            },
+            // {
+            // path: 'payment',
+            // element: <h1>payment</h1>,
+            // },
             {
                 path: 'paymentHistory',
                 element: <MemberRoute><PaymentHistory /></MemberRoute>,
