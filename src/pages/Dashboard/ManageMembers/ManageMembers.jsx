@@ -9,6 +9,10 @@ const ManageMembers = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
 
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 10;
+
     const defaultImage = "https://i.ibb.co/YfFq4cS/default-avatar.png";
 
     const { data: users = [], isLoading, refetch } = useQuery({
@@ -18,6 +22,20 @@ const ManageMembers = () => {
             return res.data.filter(user => user.role === 'member');
         },
     });
+
+    // Calculate pagination values
+
+    const filteredUsers = users.filter((user) =>
+        user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const totalUsers = filteredUsers.length;
+    const totalPages = Math.ceil(totalUsers / usersPerPage);
+    const startIndex = (currentPage - 1) * usersPerPage;
+    const endIndex = startIndex + usersPerPage;
+    const currentUsers = filteredUsers.slice(startIndex, endIndex);
+
 
     const handleChangeRole = async (userId, newRole) => {
         try {
@@ -53,10 +71,7 @@ const ManageMembers = () => {
         }
     };
 
-    const filteredUsers = users.filter((user) =>
-        user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    
 
     return (
         <div className="p-4 bg-base-100 rounded-xl shadow-xl">
@@ -97,7 +112,7 @@ const ManageMembers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredUsers.map((user, index) => (
+                            {currentUsers.map((user, index) => (
                                 <tr key={user._id} className='hover:bg-base-200 transition-colors duration-200'>
                                     <td>{index + 1}</td>
 
@@ -199,6 +214,35 @@ const ManageMembers = () => {
                     </div>
                 </dialog>
             )}
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-6">
+                <div className="join">
+                    <button
+                        className="join-item btn btn-sm"
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                    >
+                        « Prev
+                    </button>
+                    {[...Array(totalPages)].map((_, i) => (
+                        <button
+                            key={i}
+                            className={`join-item btn btn-sm ${currentPage === i + 1 ? 'btn-active' : ''}`}
+                            onClick={() => setCurrentPage(i + 1)}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
+                    <button
+                        className="join-item btn btn-sm"
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                    >
+                        Next »
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

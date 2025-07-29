@@ -2,17 +2,21 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
-import { FiClock, FiCalendar, FiDollarSign, FiTrash } from 'react-icons/fi';
+import { useState } from 'react';
 import LoadingSpinner from '../../../components/ui/Loading/LoadingSpinner';
 import NoData from '../../../components/Shared/NoData/NoData';
 import PendingBookingCard from './components/PendingBookingCard';
+
+const ITEMS_PER_PAGE = 6; // ➕ Show 6 bookings per page
 
 const PendingBookings = () => {
   const { user } = useAuth();
   const axios = useAxiosSecure();
   const queryClient = useQueryClient();
 
-  // ✅ Fetch bookings with error handling
+  const [currentPage, setCurrentPage] = useState(1); // ➕ Current pagination page
+
+  // ✅ Fetch user's pending bookings
   const {
     data: bookings = [],
     isLoading,
@@ -27,11 +31,9 @@ const PendingBookings = () => {
     enabled: !!user?.email,
   });
 
-  // ✅ Cancel Booking mutation
+  // ✅ Cancel booking mutation
   const cancelBookingMutation = useMutation({
-    mutationFn: async (id) => {
-      return await axios.delete(`/api/bookings/${id}`);
-    },
+    mutationFn: async (id) => await axios.delete(`/api/bookings/${id}`),
     onSuccess: () => {
       Swal.fire('Cancelled', 'Booking has been cancelled.', 'success');
       queryClient.invalidateQueries(['pending-bookings', user?.email]);
@@ -56,13 +58,19 @@ const PendingBookings = () => {
     });
   };
 
+  // 🔢 Pagination calculations
+  const totalPages = Math.ceil(bookings.length / ITEMS_PER_PAGE);
+  const paginatedBookings = bookings.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4 text-center">Pending Bookings</h2>
 
-      {/* ✅ Show error if fetch fails */}
       {isError && (
-        <p className="text-red-500">Failed to load bookings: {error.message}</p>
+        <p className="text-red-500 text-center">❌ Failed to load bookings: {error.message}</p>
       )}
 
       {isLoading ? (
@@ -70,11 +78,32 @@ const PendingBookings = () => {
       ) : bookings.length === 0 ? (
         <NoData message="No pending bookings found." />
       ) : (
-        <div className="grid gap-4">
-          {bookings.map((booking) => (
-            <PendingBookingCard booking={booking} cancelBookingMutation={cancelBookingMutation} handleCancel={handleCancel} />
-          ))}
-        </div>
+        <>
+          {/* 🔽 Booking Cards */}
+          <div className="grid gap-4">
+            {paginatedBookings.map((booking) => (
+              <PendingBookingCard
+                key={booking._id}
+                booking={booking}
+                cancelBookingMutation={cancelBookingMutation}
+                handleCancel={handleCancel}
+              />
+            ))}
+          </div>
+
+          {/* 🔽 Pagination Buttons */}
+          <div className="flex justify-center mt-6 gap-2">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`btn btn-sm ${currentPage === index + 1 ? 'btn-primary' : 'btn-outline'}`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

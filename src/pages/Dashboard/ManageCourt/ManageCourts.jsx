@@ -2,11 +2,15 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { FiEdit, FiTrash2, FiPlus } from 'react-icons/fi';
 import { Link } from 'react-router';
+import { useState } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const ManageCourts = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const courtsPerPage = 10;
 
   // GET all courts
   const { data: courts = [], isLoading, isError } = useQuery({
@@ -49,6 +53,11 @@ const ManageCourts = () => {
   if (isLoading) return <p>Loading courts...</p>;
   if (isError) return <p>Failed to load courts.</p>;
 
+  // Pagination logic
+  const totalPages = Math.ceil(courts.length / courtsPerPage);
+  const startIndex = (currentPage - 1) * courtsPerPage;
+  const paginatedCourts = courts.slice(startIndex, startIndex + courtsPerPage);
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -71,7 +80,7 @@ const ManageCourts = () => {
             </tr>
           </thead>
           <tbody>
-            {courts.map((court) => (
+            {paginatedCourts.map((court) => (
               <tr key={court._id}>
                 <td>
                   <img
@@ -105,6 +114,39 @@ const ManageCourts = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages && (
+        <div className="flex justify-center mt-6">
+          <div className="join">
+            <button
+              className="join-item btn btn-sm"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+            >
+              « Prev
+            </button>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                className={`join-item btn btn-sm ${currentPage === i + 1 ? 'btn-active' : ''}`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              className="join-item btn btn-sm"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              Next »
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

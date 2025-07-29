@@ -3,139 +3,173 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
+import LoadingSpinner from "../../../components/ui/Loading/LoadingSpinner";
+import NoData from "../../../components/Shared/NoData/NoData";
+
+const ITEMS_PER_PAGE = 10; // 🔢 Number of bookings per page
 
 const ConfirmedCourts = () => {
-  const { user } = useAuth(); // Get logged-in user info
-  const axios = useAxiosSecure(); // Axios instance with secure config (e.g., JWT)
-  const [selectedBooking, setSelectedBooking] = useState(null); // For modal view
+  const { user } = useAuth();
+  const axios = useAxiosSecure();
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // ➕ Track current page
 
-  // Fetch confirmed bookings for the logged-in user
-  const { data: confirmedBookings = [], isLoading } = useQuery({
+  // ✅ Fetch confirmed bookings
+  const {
+    data: confirmedBookings = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["confirmedBookings", user?.email],
-    enabled: !!user?.email, // Run query only if user email is available
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axios.get("/api/bookings", {
         params: {
           email: user?.email,
-          status: "confirmed", // Only confirmed bookings
+          status: "confirmed",
         },
       });
       return res.data;
     },
   });
 
+  // 🔢 Pagination logic
+  const totalPages = Math.ceil(confirmedBookings.length / ITEMS_PER_PAGE);
+  const paginatedBookings = confirmedBookings.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   return (
     <div className="p-4 md:p-8">
-      {/* SEO title */}
+      {/* 🔹 SEO */}
       <Helmet>
         <title>Confirmed Courts | Book A Play</title>
       </Helmet>
 
-      {/* Page heading */}
+      {/* 🔹 Heading */}
       <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-primary">
         Confirmed Courts
       </h2>
 
-      {/* Loading spinner */}
-      {isLoading ? (
-        <div className="text-center py-10">
-          <span className="loading loading-bars loading-lg text-primary"></span>
-        </div>
-      ) : confirmedBookings.length === 0 ? (
-        /* No confirmed bookings message */
-        <p className="text-center text-gray-500">No confirmed bookings found.</p>
-      ) : (
-        /* Table showing confirmed bookings */
-        <div className="overflow-x-auto rounded-xl shadow-lg bg-base-300">
-          <table className="table table-zebra w-full text-sm md:text-base">
-            <thead className="bg-secondary text-secondary-content">
-              <tr>
-                <th>#</th>
-                <th>Court</th>
-                <th>Date</th>
-                <th>Slots</th>
-                <th>Price (৳)</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {confirmedBookings.map((booking, index) => (
-                <tr key={booking._id}>
-                  <td>{index + 1}</td>
-                  <td>{booking.courtTitle}</td>
-                  <td>{new Date(booking.date).toDateString()}</td>
-                  <td>
-                    {/* List all booked slots */}
-                    {booking.slots.map((slot, i) => (
-                      <span key={i} className="block">
-                        ⏱ {slot.start} - {slot.end}
-                      </span>
-                    ))}
-                  </td>
-                  <td className="text-green-600 font-semibold">
-                    {/* Show discount if available and less than original price */}
-                    {booking.discountedPrice && booking.discountedPrice < booking.price ? (
-                      <>
-                        {/* Original price struck through */}
-                        <span className="line-through text-gray-500 mr-2">৳{booking.price}</span>
-                        {/* Discounted price */}
-                        <span>৳{booking.discountedPrice}</span>
-                        {/* Discount amount */}
-                        <span className="ml-2 text-sm text-success">
-                          ({booking.price - booking.discountedPrice}৳ off)
-                        </span>
-                      </>
-                    ) : (
-                      /* No discount: show normal price */
-                      <>৳{booking.price}</>
-                    )}
-                  </td>
-                  <td>
-                    {/* Button to open booking details modal */}
-                    <button
-                      onClick={() => setSelectedBooking(booking)}
-                      className="btn btn-sm btn-outline btn-primary"
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* 🔹 Error */}
+      {isError && (
+        <p className="text-red-500 text-center mb-4">
+          ❌ Failed to load bookings: {error.message}
+        </p>
       )}
 
-      {/* Booking details modal */}
+      {/* 🔹 Loading */}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : confirmedBookings.length === 0 ? (
+        <NoData message="No confirmed bookings found." />
+      ) : (
+        <>
+          {/* 🔹 Table */}
+          <div className="overflow-x-auto rounded-xl shadow-lg bg-base-300">
+            <table className="table table-zebra w-full text-sm md:text-base">
+              <thead className="bg-secondary text-secondary-content">
+                <tr>
+                  <th>#</th>
+                  <th>Court</th>
+                  <th>Date</th>
+                  <th>Slots</th>
+                  <th>Price (৳)</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedBookings.map((booking, index) => (
+                  <tr key={booking._id}>
+                    <td>{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
+                    <td>{booking.courtTitle}</td>
+                    <td>{new Date(booking.date).toDateString()}</td>
+                    <td>
+                      {booking.slots.map((slot, i) => (
+                        <span key={i} className="block">
+                          ⏱ {slot.start} - {slot.end}
+                        </span>
+                      ))}
+                    </td>
+                    <td className="text-green-600 font-semibold">
+                      {booking.discountedPrice &&
+                      booking.discountedPrice < booking.price ? (
+                        <>
+                          <span className="line-through text-gray-500 mr-2">
+                            ৳{booking.price}
+                          </span>
+                          <span>৳{booking.discountedPrice}</span>
+                          <span className="ml-2 text-sm text-success">
+                            ({booking.price - booking.discountedPrice}৳ off)
+                          </span>
+                        </>
+                      ) : (
+                        <>৳{booking.price}</>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => setSelectedBooking(booking)}
+                        className="btn btn-sm btn-outline btn-primary"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 🔹 Pagination Buttons */}
+          <div className="flex justify-center mt-6 gap-2">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`btn btn-sm ${
+                  currentPage === index + 1 ? "btn-primary" : "btn-outline"
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* 🔹 Modal for Booking Details */}
       {selectedBooking && (
         <dialog open className="modal modal-bottom sm:modal-middle">
           <div className="modal-box bg-base-100">
-            {/* Close button */}
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
               onClick={() => setSelectedBooking(null)}
-              aria-label="Close booking details"
+              aria-label="Close modal"
             >
               ✕
             </button>
 
-            {/* Booking title */}
             <h3 className="text-lg font-bold mb-3">
               Booking Details for {selectedBooking.courtTitle}
             </h3>
 
-            {/* Court image */}
             <img
               src={selectedBooking.courtImage}
               alt={`Court - ${selectedBooking.courtTitle}`}
               className="w-full h-40 object-cover rounded mb-4"
             />
 
-            {/* Booking date */}
-            <p><strong>Date:</strong> {new Date(selectedBooking.date).toDateString()}</p>
+            <p>
+              <strong>Date:</strong>{" "}
+              {new Date(selectedBooking.date).toDateString()}
+            </p>
 
-            {/* Booked slots */}
-            <p className="mt-2"><strong>Slots:</strong></p>
+            <p className="mt-2">
+              <strong>Slots:</strong>
+            </p>
             <ul className="list-disc list-inside mb-3 text-sm">
               {selectedBooking.slots.map((slot, idx) => (
                 <li key={idx}>
@@ -144,15 +178,20 @@ const ConfirmedCourts = () => {
               ))}
             </ul>
 
-            {/* Price with discount info */}
             <p>
               <strong>Price:</strong>{" "}
-              {selectedBooking.discountedPrice && selectedBooking.discountedPrice < selectedBooking.price ? (
+              {selectedBooking.discountedPrice &&
+              selectedBooking.discountedPrice < selectedBooking.price ? (
                 <>
-                  <span className="line-through text-gray-500 mr-2">৳{selectedBooking.price}</span>
-                  <span className="text-green-600 font-semibold">৳{selectedBooking.discountedPrice}</span>
+                  <span className="line-through text-gray-500 mr-2">
+                    ৳{selectedBooking.price}
+                  </span>
+                  <span className="text-green-600 font-semibold">
+                    ৳{selectedBooking.discountedPrice}
+                  </span>
                   <span className="ml-2 text-sm text-success">
-                    ({selectedBooking.price - selectedBooking.discountedPrice}৳ off)
+                    ({selectedBooking.price - selectedBooking.discountedPrice}৳
+                    off)
                   </span>
                 </>
               ) : (
@@ -160,8 +199,10 @@ const ConfirmedCourts = () => {
               )}
             </p>
 
-            {/* Transaction ID */}
-            <p><strong>Transaction ID:</strong> {selectedBooking.transactionId || "N/A"}</p>
+            <p>
+              <strong>Transaction ID:</strong>{" "}
+              {selectedBooking.transactionId || "N/A"}
+            </p>
           </div>
         </dialog>
       )}

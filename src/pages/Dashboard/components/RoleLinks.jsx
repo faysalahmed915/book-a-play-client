@@ -91,12 +91,12 @@ const RoleLinks = () => {
                         Confirmed Bookings
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to="/dashboard/payment" className="gap-2">
                         <FiDollarSign />
                         Payment Page
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink to="/dashboard/paymentHistory" className="gap-2">
                         <FiCreditCard />

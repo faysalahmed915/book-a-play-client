@@ -28,13 +28,14 @@ import ManageCoupons from "../pages/Dashboard/ManageCoupons/ManageCoupons.jsx";
 import PrivateRoute from "../routes/PrivateRoute.jsx";
 import MemberRoute from "../routes/MemberRoute.jsx";
 import AdminRoute from "../routes/AdminRoute.jsx";
+import ErrorPage from "../routes/ErrorPage.jsx";
 
 
 export const Router = createBrowserRouter([
     {
         path: '/',
         Component: RootLayout,
-        // errorElement: <ErrorPage></ErrorPage>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 index: true,
@@ -95,6 +96,7 @@ export const Router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
