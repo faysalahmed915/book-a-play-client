@@ -6,13 +6,13 @@ export default function HomePageHero() {
   return (
     <div className="bg-gradient-to-br from-base-200 to-base-300 py-20 px-6 md:px-16 lg:px-28 text-center">
       <Slide direction="up" triggerOnce>
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">
           Welcome to <span className="text-green-600">BookAPlay</span> Club
         </h1>
       </Slide>
 
       <Fade delay={200} cascade damping={0.1} triggerOnce>
-        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+        <p className="text-lg md:text-xl text-gray-500 max-w-3xl mx-auto mb-8">
           Join our premier sports club — where passion meets performance!
           Book courts, manage sessions, and stay connected with all activities
           through your personalized dashboard.
