@@ -6,6 +6,7 @@ import Location from "../components/Location";
 import Promotions from "../components/Promotions";
 import Banner from "../components/Banner";
 import HomePageHero from "../components/HomePageHero";
+import HomeFeatures from "../components/HomeFeatures";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       {/* <Gallery /> */}
       <Location />
       <Promotions />
+      <HomeFeatures />
     </div>
   );
 }
