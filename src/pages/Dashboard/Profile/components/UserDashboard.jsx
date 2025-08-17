@@ -2,7 +2,7 @@ import React from 'react'
 import useUserData from '../../../../hooks/useUserData'
 import LoadingSpinner from '../../../../components/ui/Loading/LoadingSpinner'
 
-const ProfilePage = () => {
+const UserDashboard = () => {
     const { userData, isLoading, isError } = useUserData()
 
     if (isLoading) return <LoadingSpinner />
@@ -39,4 +39,4 @@ const ProfilePage = () => {
     )
 }
 
-export default ProfilePage
+export default UserDashboard

@@ -11,7 +11,7 @@ import ResetPassword from "../pages/Authentication/ResetPassword.jsx";
 import DashboardLayout from "../layouts/DashboardLayout.jsx";
 import Courts from "../pages/Court/Courts.jsx";
 import Dashboard from "../pages/Dashboard/HomeDashboard/Dashboard.jsx";
-import Profile from "../pages/Dashboard/Profile/Profile.jsx";
+import Profile from "../pages/Dashboard/Profile/Dashboard.jsx";
 import ManageCourts from "../pages/Dashboard/ManageCourt/ManageCourts.jsx";
 import AddCourtForm from "../pages/Dashboard/ManageCourt/components/AddCourtForm.jsx";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers.jsx";
