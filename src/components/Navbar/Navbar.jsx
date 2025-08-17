@@ -84,8 +84,8 @@ const Navbar = () => {
 
 
     return (
-        <div className="bg-base-300 shadow-md px-2 md:px-4 lg:px-8 py-2 sticky top-0 z-50">
-            <div className="navbar max-w-7xl mx-auto px-0">
+        <div className="bg-base-300 shadow-md sticky top-0 z-50">
+            <div className="navbar max-w-7xl mx-auto px-2 md:px-4 lg:px-8 py-2">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden hover:bg-base-200">

@@ -5,7 +5,7 @@ import Logo from "../Shared/Logo/Logo";
 const Footer = () => {
   return (
     <footer className="bg-base-300 text-base-content">
-      <div className="max-w-6xl mx-auto px-4 py-10 grid gap-10 md:grid-cols-3">
+      <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 py-2 py-10 grid gap-10 md:grid-cols-3">
         {/* Logo & Description */}
         <div className="space-y-2">
           <Logo />
