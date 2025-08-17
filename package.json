@@ -30,6 +30,7 @@
     "react-time-picker": "^7.0.0",
     "react-time-range": "^1.0.4",
     "react-vertical-timeline-component": "^3.5.3",
+    "recharts": "^3.1.2",
     "sweetalert2": "^11.22.2"
   },
   "devDependencies": {
